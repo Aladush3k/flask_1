@@ -14,7 +14,6 @@ def training(prof):
         sxema = ['Инженерные тренажеры', '/static/img/img.png']
     else:
         sxema = ['Научные симуляторы', '/static/img/img_1.png']
-    print(url_for('static', filename=sxema[1]))
     return render_template('training.html', image=sxema[1], text=sxema[0])
 
 
