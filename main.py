@@ -8,9 +8,14 @@ def index(title):
     return render_template('index.html', title=title)
 
 
-@app.route('/odd_even')
-def odd_even():
-    return render_template('odd_even.html', number=2)
+@app.route('/training/<prof>')
+def training(prof):
+    if 'инженер' in str(prof) or 'строитель' in str(prof):
+        sxema = ['Инженерные тренажеры', '/static/img/img.png']
+    else:
+        sxema = ['Научные симуляторы', '/static/img/img_1.png']
+    print(url_for('static', filename=sxema[1]))
+    return render_template('training.html', image=sxema[1], text=sxema[0])
 
 
 if __name__ == '__main__':
