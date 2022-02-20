@@ -1,5 +1,10 @@
-from flask import Flask, url_for, request, render_template
+from flask import Flask, render_template
+from flask_wtf import FlaskForm
 import json
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
+
+
 app = Flask(__name__)
 
 
@@ -25,11 +30,24 @@ def show_list(list): # незнаю как указать путь до json ф�
         tag = 1
     elif list == 'ul':
         tag = 2
-    with open("C:/Users/vakva/PycharmProjects/flask_1/static/js/list.json", "rt", encoding="utf8") as f:
+    with open("templates/list.json", "rt", encoding="utf8") as f:
         news_list = json.loads(f.read())
     return render_template('list.html', news=news_list, tag=tag)
 
-        
-if __name__ == '__main__':
+
+@app.route('/login')
+def login():
+    form = LoginForm()
+    return render_template('login.html', title='Авторизация', form=form)
+
+
+class LoginForm(FlaskForm):
+    username = StringField('Логин', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    remember_me = BooleanField('Запомнить меня')
+    submit = SubmitField('Войти')
+
+
+if __name__ == "__main__":
     app.run(port=8080, host='127.0.0.1')
 
